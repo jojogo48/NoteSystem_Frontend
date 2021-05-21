@@ -1,10 +1,10 @@
 import React from 'react';
-
+import Container from 'react-bootstrap/Container'
 class ChangeCategory extends React.Component
 {
     constructor(props) {
         super(props);
-        this.state = {category:'uncategorized',note:[]};
+        this.state = {category:'',note:[]};
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.onInputChangeHandler = this.onInputChangeHandler.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -15,7 +15,7 @@ class ChangeCategory extends React.Component
         var data = {};
         data['category'] = this.state.category;
         data['notes'] = this.state.note;
-
+        data['token'] = window.localStorage.getItem("token");
         let url = 'http://localhost:8080/notes/change';
         fetch(url, {
             method: 'post',
@@ -62,25 +62,27 @@ class ChangeCategory extends React.Component
 
     }
 
-    componentDidMount(){
+    async componentDidMount(){
             var that = this;
-
-            fetch('http://localhost:8080/notes/category/未分類',{method: 'get'}).then(function(response){
+            var data ={};
+            data["token"]=window.localStorage.getItem("token");
+            await fetch('http://localhost:8080/notes/category/未分類',{ method: 'post', headers: {'Content-Type': 'application/json'},body:JSON.stringify(data)}).then(function(response){
             response.json().then(function(data){
                 that.setState({data:data});
               });
             });
 
-            fetch('http://localhost:8080/noteCategory',{method: 'get'}).then(function(response){
+            await fetch('http://localhost:8080/noteCategory',{ method: 'post', headers: {'Content-Type': 'application/json'},body:JSON.stringify(data)}).then(function(response){
             response.json().then(function(data){
                 that.setState({noteCategory:data});
                 if(data.length > 1)
                 {
-                    if(data[0].categoryName != '未分類'){
-                        that.setState({category:data[0].categoryName});
-                    }else{
-                        that.setState({category:data[1].categoryName});
-                    }
+                        if(data[0].categoryName !== '未分類')
+                        {
+                            that.setState({category:data[0].id.toString()});
+                        }else{
+                            that.setState({category:data[1].id.toString()});
+                        }
 
                 }
               });
@@ -96,7 +98,8 @@ class ChangeCategory extends React.Component
         if(typeof this.state.data!= 'undefined' && typeof this.state.noteCategory!= 'undefined')
         {
             return (
-            <div className="card" style={{width: 20+'rem',color:"black"}}>
+            <Container>
+            <div className="card" style={{width: 20+'rem',color:"black",margin:"10em auto"}}>
                 <div className="card-body">
                 <form onSubmit={this.onSubmitHandler}>
                     <label>
@@ -104,12 +107,13 @@ class ChangeCategory extends React.Component
                     <select onChange={this.handleChange}>
                         {
                             this.state.noteCategory.map((value,index2) => {
-                                if(value.categoryName == '未分類')
+
+                                if(value.categoryName === '未分類')
                                 {
                                     return null;
                                 }
                                 return  (
-                                    <option key={value.categoryName} value={value.categoryName}>{value.categoryName}</option>
+                                    <option key={value.categoryName} value={value.id}>{value.categoryName}</option>
                                 )})
                         }
 
@@ -132,14 +136,14 @@ class ChangeCategory extends React.Component
                     <input type="submit" />
                 </form>
                 </div>
-            </div>);
+            </div>
+            </Container>
+
+            );
         }
 
 
         return (<div>
-            <form onSubmit={this.onSubmitHandler}>
-                <input type="submit" />
-            </form>
         </div>);
 
 

@@ -283,6 +283,9 @@ background-color:#343a40;
 color:white;
 border-color: rgba(243, 244, 246, 1);
 }
+
+
+
 .white{
 background-color:white;
 color:black;
@@ -320,4 +323,22 @@ pointer-events: none;
 
 .zero-padding{
 padding:0 0;
+}
+.table thead th{
+  border-top: 0px;
+}
+.actual-btn {
+
+  background-color: white;
+  color: black;
+  font-family: sans-serif;
+  border:1px solid ;
+  border-radius: 0.3rem;
+
+  margin-top: 1rem;
+    cursor: pointer;
+}
+.navbar-link:hover .dark{
+background:gray;
+color:white;
 }

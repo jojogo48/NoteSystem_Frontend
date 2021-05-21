@@ -14,7 +14,9 @@ function Home()
     };
 
    const fetchCategory = async () => {
-            const response = await fetch('http://localhost:8080/noteCategory',{method: 'get'});
+            var tokenData = {};
+            tokenData["token"]=window.localStorage.getItem("token");
+            const response = await fetch('http://localhost:8080/noteCategory',{ method: 'post', headers: {'Content-Type': 'application/json'},body:JSON.stringify(tokenData)});
             const data = await response.json();
             setNoteCategory(data);
    }
@@ -32,7 +34,7 @@ function Home()
                    const skin = ["","ruled","dotted","squared"];
 
                    return  (
-                       <Notebook key={value.categoryName} name={value.categoryName} url="/storeNote" cover={color[getRandomInt(4)]} skin={skin[getRandomInt(4)]}/>
+                       <Notebook key={value.categoryName} name={value.categoryName} url={"/storeNote/list/"+value.categoryName} cover={color[getRandomInt(4)]} skin={skin[getRandomInt(4)]}/>
                    )
 
                })

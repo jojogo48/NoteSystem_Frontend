@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Container from 'react-bootstrap/Container'
 class CreateCategory extends React.Component
 {
     constructor(props) {
@@ -26,6 +26,7 @@ class CreateCategory extends React.Component
 
         var data = {};
         data['category_name'] = this.state.categoryName;
+        data["token"]=window.localStorage.getItem("token");
         e.preventDefault();
 
 
@@ -55,13 +56,17 @@ class CreateCategory extends React.Component
 
     render() {
                  return (
-                 <div>
-                    <form onSubmit={this.onSubmitHandler}>
-                        <label htmlFor="categoryName">Category Name</label><br />
-                        <input type="text" name="categoryName" onChange={this.onInputChangeHandler} />
-                        <input type="submit" />
-                    </form>
-                 </div>);
+                 <Container>
+                    <div className="card" style={{width: 20+'rem',color:"black",margin:"20em auto"}}>
+                        <div className="card-body">
+                            <form onSubmit={this.onSubmitHandler} >
+                                <label htmlFor="categoryName">分類名稱</label><br />
+                                <input type="text" name="categoryName" onChange={this.onInputChangeHandler} />
+                                <input type="submit" />
+                            </form>
+                        </div>
+                    </div>
+                 </Container>);
         }
 }
 export default CreateCategory;

@@ -7,30 +7,39 @@ import Upload from './StoreNote/Upload';
 import Search from './SearchNote/Search';
 import Write from './StoreNote/Write'
 import ListNote from './StoreNote/ListNote';
+import ListAllNote from './StoreNote/ListAllNote';
 import Classification from './Classification/Classification';
 import CreateCategory from './Classification/CreateCategory';
 import ChangeCategory from './Classification/ChangeCategory';
 import Sidebar from './Home/Sidebar';
+import Login from './Home/Login';
 import './style.css';
+import PrivateRoute from './PrivateRoute';
+
+
+window.authed = false;
 
 class App extends React.Component
 {
+
     render() {
              return (
                 <Router>
                     <Sidebar />
                     <div className='main'>
                     <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route exact path="/storeNote" component={StoreNote} />
-                        <Route exact path="/storeNote/upload" component={Upload} />
-                        <Route exact path="/storeNote/write" component={Write} />
-                        <Route exact path="/storeNote/list" component={ListNote} />
-                        <Route exact path="/classification" component={Classification} />
-                        <Route exact path="/classification/create" component={CreateCategory} />
-                        <Route exact path="/classification/classify" component={ChangeCategory} />
-                        <Route exact path="/search" component={Search} />
-                        <Route exact path="/successful" component={Successful} />
+                        <Route exact path="/login" component={Login}/>
+                        <PrivateRoute exact path="/" component={Home} />
+                        <PrivateRoute exact path="/storeNote" component={StoreNote} />
+                        <PrivateRoute exact path="/storeNote/upload" component={Upload} />
+                        <PrivateRoute exact path="/storeNote/write" component={Write} />
+                        <PrivateRoute exact path="/storeNote/list/:category" component={ListNote} />
+                        <PrivateRoute exact path="/storeNote/list/" component={ListAllNote} />
+                        <PrivateRoute exact path="/classification" component={Classification} />
+                        <PrivateRoute exact path="/classification/create" component={CreateCategory} />
+                        <PrivateRoute exact path="/classification/classify" component={ChangeCategory} />
+                        <PrivateRoute exact path="/search" component={Search} />
+                        <PrivateRoute exact path="/successful" component={Successful} />
                     </Switch>
                     </div>
                 </Router>
