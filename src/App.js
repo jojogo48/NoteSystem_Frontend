@@ -15,7 +15,7 @@ import Sidebar from './Home/Sidebar';
 import Login from './Home/Login';
 import './style.css';
 import PrivateRoute from './PrivateRoute';
-
+import Logout from './Home/Logout';
 
 window.authed = false;
 
@@ -29,6 +29,7 @@ class App extends React.Component
                     <div className='main'>
                     <Switch>
                         <Route exact path="/login" component={Login}/>
+                        <Route exact path="/logout" component={Logout}/>
                         <PrivateRoute exact path="/" component={Home} />
                         <PrivateRoute exact path="/storeNote" component={StoreNote} />
                         <PrivateRoute exact path="/storeNote/upload" component={Upload} />

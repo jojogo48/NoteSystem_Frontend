@@ -24,6 +24,7 @@ class ListAllNote extends React.Component
             var that = this;
             fetch('http://localhost:8080/notes/categories',{ method: 'post', headers: {'Content-Type': 'application/json'},body:JSON.stringify(tokenData)}).then(function(response){
             response.json().then(function(data){
+                console.log(data);
                 that.setState({data:data});
               });
             });

@@ -56,7 +56,7 @@ function Login(props)
             <form onSubmit={login}>
             {userInput} <br />
             {passwordInput}<br />
-            <button type="submit" value="submit">Submit</button>
+            <button type="submit" value="submit">登入</button>
             </form>
         );
     }
