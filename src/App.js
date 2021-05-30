@@ -29,18 +29,18 @@ class App extends React.Component
                     <div className='main'>
                     <Switch>
                         <Route exact path="/login" component={Login}/>
-                        <Route exact path="/logout" component={Logout}/>
-                        <PrivateRoute exact path="/" component={Home} />
-                        <PrivateRoute exact path="/storeNote" component={StoreNote} />
-                        <PrivateRoute exact path="/storeNote/upload" component={Upload} />
-                        <PrivateRoute exact path="/storeNote/write" component={Write} />
-                        <PrivateRoute exact path="/storeNote/list/:category" component={ListNote} />
-                        <PrivateRoute exact path="/storeNote/list/" component={ListAllNote} />
-                        <PrivateRoute exact path="/classification" component={Classification} />
-                        <PrivateRoute exact path="/classification/create" component={CreateCategory} />
-                        <PrivateRoute exact path="/classification/classify" component={ChangeCategory} />
-                        <PrivateRoute exact path="/search" component={Search} />
-                        <PrivateRoute exact path="/successful" component={Successful} />
+                        <Route exact path="/logout" component={Logout} />
+                        <PrivateRoute exact path="/" component={Home} location={this.props.location}/>
+                        <PrivateRoute exact path="/storeNote" component={StoreNote} location={this.props.location}/>
+                        <PrivateRoute exact path="/storeNote/upload" component={Upload} location={this.props.location}/>
+                        <PrivateRoute exact path="/storeNote/write" component={Write} location={this.props.location}/>
+                        <PrivateRoute exact path="/storeNote/list/:category" component={ListNote} location={this.props.location}/>
+                        <PrivateRoute exact path="/storeNote/list/" component={ListAllNote} location={this.props.location}/>
+                        <PrivateRoute exact path="/classification" component={Classification} location={this.props.location}/>
+                        <PrivateRoute exact path="/classification/create" component={CreateCategory} location={this.props.location}/>
+                        <PrivateRoute exact path="/classification/classify" component={ChangeCategory} location={this.props.location}/>
+                        <PrivateRoute exact path="/search" component={Search} location={this.props.location}/>
+                        <PrivateRoute exact path="/successful" component={Successful} location={this.props.location}/>
                     </Switch>
                     </div>
                 </Router>

@@ -1,18 +1,17 @@
-import React from "react";
+import React,{useState} from "react";
 import 'bootstrap/dist/js/bootstrap.js'
 import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
 import '../style.css'
+import Modal from 'react-bootstrap/Modal'
 class ListNote extends React.Component
 {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {show:false};
         this.componentDidMount = this.componentDidMount.bind(this);
-        this.openLink = this.openLink.bind(this);
     }
-
 
 
     componentDidMount(){
@@ -26,20 +25,6 @@ class ListNote extends React.Component
             });
 
     }
-
-    openLink(url){
-        window.open(url, '_blank');
-        /*fetch(url,{method: 'get'})
-          .then(response => {
-
-              const filename =  response.headers.get('Content-Disposition').split("attachment; filename*=UTF-8''");
-              window.open(filename, '_blank');
-              console.log( response.headers.get('Content-Disposition').split("attachment; filename*=UTF-8''"));
-            });*/
-
-
-    }
-
     render() {
 
             if(typeof this.state.data != 'undefined')
@@ -77,7 +62,9 @@ class ListNote extends React.Component
                                                 <td>
                                                      <a href={"http://localhost:8080/files/download/"+window.localStorage.getItem("token")+"/"+ this.state.data[key].id} ><Button variant="primary" rel="noreferrer">Download</Button></a>
                                                 </td>
-
+                                                <td>
+                                                    <DeleteBtn  variant="danger" deleteId={this.state.data[key].id}/>
+                                                </td>
                                             </tr>
                                          );
                                     })
@@ -93,5 +80,43 @@ class ListNote extends React.Component
 </div>
             );
     };
+}
+
+function DeleteBtn(props) {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleDelete = (id)=>{
+    setShow(false);
+    var tokenData = {};
+    tokenData["token"]=window.localStorage.getItem("token");
+    fetch('http://localhost:8080/notes/delete/'+id,{ method: 'post', headers: {'Content-Type': 'application/json'},body:JSON.stringify(tokenData)}).then(function(response){
+
+    });
+        window.location.reload();
+  }
+  return (
+    <>
+      <Button variant={props.variant} onClick={handleShow}>
+        Delete
+      </Button>
+
+      <Modal show={show} onHide={handleClose} style={{color:"black"}}>
+        <Modal.Header closeButton>
+          <Modal.Title>刪除</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>確定要刪除此筆記</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            關閉
+          </Button>
+          <Button variant={props.variant} onClick={()=>handleDelete(props.deleteId)}>
+            刪除
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
 }
 export default ListNote;

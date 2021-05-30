@@ -6,7 +6,13 @@ import Accordion from 'react-bootstrap/Accordion';
 import NoteLogo from '../notebook.svg';
 
 export default function Sidebar(props){
-
+    var logoutItem=(<></>);
+    if(localStorage.getItem("token") )
+    {
+        logoutItem =          <Accordion className="navbar-link">
+                                 <Nav.Link className='dark' as={Link} to="/logout" ><span>登出</span></Nav.Link>
+                              </Accordion    >;
+    }
     return (
         <Nav  defaultActiveKey="/home" className="flex-column   sidebar ">
          <Link to="/">
@@ -46,7 +52,7 @@ export default function Sidebar(props){
                 <Nav.Link className='dark' as={Link} to="/search" ><span className="inner-circle"></span><span>搜尋</span></Nav.Link>
              </Accordion.Collapse>
          </Accordion>
-
+         {logoutItem}
         </Nav>
     );
 };

@@ -14,13 +14,21 @@ function Home()
     };
 
    const fetchCategory = async () => {
+            if(window.localStorage.getItem("token")==null)
+            {
+                window.location.reload();
+            }
             var tokenData = {};
             tokenData["token"]=window.localStorage.getItem("token");
             const response = await fetch('http://localhost:8080/noteCategory',{ method: 'post', headers: {'Content-Type': 'application/json'},body:JSON.stringify(tokenData)});
             const data = await response.json();
             setNoteCategory(data);
    }
-
+    if(window.localStorage.getItem("token")==null)
+    {
+        window.location.reload();
+        return <></>;
+    }
     return (
 
     <div className="main-content">
